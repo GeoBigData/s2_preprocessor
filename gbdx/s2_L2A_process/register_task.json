@@ -30,7 +30,7 @@
     }],
     "name": "s2_L2A_process",
     "taskOwnerEmail": "michael.gleason@digitalglobe.com",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "WARNING: THIS TASK IS EXPERIMENTAL AND HAS NOT BEEN ROBUSTLY TESTED. This task will apply the Sen2Cor toolbox to an S2 L1C product in SAFE format specification. This produces an L2A product that has been atmospherically compensated.",
     "properties": {
         "isPublic": true,

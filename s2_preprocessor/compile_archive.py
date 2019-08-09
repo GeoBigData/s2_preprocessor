@@ -1,6 +1,7 @@
 import click
 from sentinelhub import AwsProductRequest
 import os
+import sh
 
 @click.command()
 @click.argument('image_id')
@@ -44,6 +45,14 @@ def main(image_id, out_path, aws_access_key_id=None, aws_secret_access_key=None,
     product_request = AwsProductRequest(product_id=image_id, data_folder=out_path, safe_format=True,
                                         tile_list=tile_list, bands=band_list)
     product_request.save_data()
+
+    # zip it all up
+    # necessary because otherwise gbdx will drop empty folders and sen2cor will fail
+    print("Zipping up SAFE archive")
+    archive = os.path.join(out_path, '{}.SAFE'.format(image_id))
+    # use sh to do this because the shutil.make_archive() function doesn't seem to work with SNAP
+    sh.zip('-rm', archive.replace('.SAFE', '.zip'), os.path.basename(archive), '-4', _cwd=os.path.dirname(archive))
+
     print("Process completed successfully.")
 
 

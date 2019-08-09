@@ -7,21 +7,21 @@
             "name": "image_id"
         }, 
         {
-            "required": false,
+            "required": true,
             "type": "string",
-            "description": "(Optional) AWS Access Key ID to use when downloading the data from AWS Open Data Registry. Note: The account associated with these credentials pays download costs.",
+            "description": "AWS Access Key ID to use when downloading the data from AWS Open Data Registry. Note: The account associated with these credentials pays download costs.",
             "name": "aws_access_key_id"
         },
         {
-            "required": false,
+            "required": true,
             "type": "string",
-            "description": "(Optional) AWS Secret Access Key to use when downloading the data from AWS Open Data Registry. Note: The account associated with these credentials pays download costs.",
+            "description": "AWS Secret Access Key to use when downloading the data from AWS Open Data Registry. Note: The account associated with these credentials pays download costs.",
             "name": "aws_secret_access_key"
         },
         {
-            "required": false,
+            "required": true,
             "type": "string",
-            "description": "(Optional) AWS Session Token to use when downloading the data from AWS Open Data Registry. Note: The account associated with these credentials pays download costs.",
+            "description": "AWS Session Token to use when downloading the data from AWS Open Data Registry. Note: The account associated with these credentials pays download costs.",
             "name": "aws_session_token"
         },
         {
@@ -54,7 +54,7 @@
     }],
     "name": "s2_compile_archive",
     "taskOwnerEmail": "michael.gleason@digitalglobe.com",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "WARNING: THIS TASK IS EXPERIMENTAL AND HAS NOT BEEN ROBUSTLY TESTED. This task will download a Sentinel-2 image from the Registry of Open Data on AWS (https://registry.opendata.aws/sentinel-2/) and compile it into the SAFE format specification. This format is required for the data to be compatible with the ESA SNAP Toolbox and other ESA standalone tools (e.g., Sen2Cor).",
     "properties": {
         "isPublic": true,

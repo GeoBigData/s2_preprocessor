@@ -4,7 +4,7 @@ import json
 import glob
 from s2_preprocessor import L2A_process
 from s2_preprocessor.utils import convert_type
-
+import sh
 
 def main():
 
@@ -26,12 +26,18 @@ def main():
     resolution = convert_type(resolution, int, 'Int')
 
     # get the SAFE file in the input folder
-    safes = glob.glob1(input_data, '*.SAFE')
-    if len(safes) == 0:
-        raise ValueError("No SAFE archive found in input data port")
-    if len(safes) > 1:
-        raise ValueError("Multiple SAFE archives found in input data port")
-    in_safe = os.path.join(input_data, safes[0], '')
+    zips = glob.glob1(input_data, '*.zip')
+    if len(zips) == 0:
+        raise ValueError("No zips found in input data port")
+    if len(zips) > 1:
+        raise ValueError("Multiple zips found in input data port")
+    in_zip = os.path.join(input_data, zips[0])
+
+    # unzip it
+    sh.unzip(in_zip, _cwd=os.path.dirname(in_zip))
+
+    # rename to safe
+    in_safe = in_zip.replace('.zip', '.SAFE')
 
     # run the processing
     print("Starting L2A_Process...")
