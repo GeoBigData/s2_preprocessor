@@ -1,0 +1,22 @@
+# to build the docker the first time
+docker build -t mgleason/s2_preprocessor -f gbdx/Dockerfile .
+
+# to spin up the docker image with no volume mounts
+docker run -it mgleason/s2_preprocessor
+
+# to spin up docker image with simulated input/output mounts
+docker run --rm -v $(pwd)/gbdx/s2_compile_archive/sample_input:/mnt/work/input -v $(pwd)/gbdx/s2_compile_archive/sample_output:/mnt/work/output -it mgleason/s2_preprocessor
+docker run --memory=16g --rm -v $(pwd)/gbdx/s2_compile_archive/sample_output:/mnt/work/input -v $(pwd)/gbdx/s2_l2a_process/sample_output:/mnt/work/output -it mgleason/s2_preprocessor
+
+# OLD STUFF FOR TRYING TO DEAL WITH DUMB NUMPY MEMORY ERRORS
+docker build -t mgleason/sen2cor -f gbdx/Dockerfile_2 .
+docker run --memory=16g --rm -v $LOCAL_PATH/gbdx/s2_compile_archive/sample_output:/mnt/work/input -v $LOCAL_PATH/gbdx/s2_l2a_process/sample_output:/mnt/work/output -it mgleason/sen2cor
+ /opt/conda/bin/python -s /helper/sen2cor/lib/python2.7/site-packages/sen2cor/L2A_Process.py  "$@" /mnt/work/input/data/S2A_MSIL1C_20171010T003621_N0205_R002_T01WCV_20171010T003615.SAFE/ --output_dir /mnt/work/output/data/ --resolution 20
+
+
+# within the docker, run the script
+python /s2_preprocessor/s2_preprocessor/task_runners/run_compile_archive.py
+python /s2_preprocessor/s2_preprocessor/task_runners/run_L2A_process.py
+
+# push to docker hub
+docker push mgleason/s2_preprocessor
