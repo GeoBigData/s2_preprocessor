@@ -40,7 +40,7 @@ cmd += "$indir/data1/*.SAFE/GRANULE/*/IMG_DATA/R20m/*_B12_20m.jp2; "
 cmd += "gdal_edit.py -a_nodata 0 $outdir/data1/{product_id}.tif; "
 cmd += "rm $outdir/data1/test.txt; "
 cmd = cmd.format(product_id=product_id)
-band_stack = gbdx.Task("gdal-cli-multiplex-mg:0.0.4",
+band_stack = gbdx.Task("gdal-cli-multiplex:0.0.1",
                        data1=l2a_task.outputs.data,
                        command=cmd)
 
